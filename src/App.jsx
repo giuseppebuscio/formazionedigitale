@@ -4,6 +4,18 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedSubject, setSelectedSubject] = useState('')
   const [viewMode, setViewMode] = useState('grid') // 'grid' or 'list'
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const educationalTools = [
     // AR e Realtà Aumentata
@@ -131,79 +143,98 @@ const App = () => {
   return (
     <div>
       {/* Header */}
-      <div className="py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center py-8">
-            <h1 className="text-5xl font-bold text-gray-900 mb-3 tracking-tight">
+      <div className="py-6 sm:py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center py-4 sm:py-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 tracking-tight">
               Formazione <span className="text-blue-600">Digitale</span>
             </h1>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-500 max-w-2xl mx-auto px-4">
               Scopri le migliori risorse educative digitali per la formazione
             </p>
           </div>
         </div>
         {/* ChatGPT-style Search Bar */}
-        <div className="max-w-4xl mx-auto px-6 -mt-4">
-          <div className="relative bg-white/90 backdrop-blur-sm border border-gray-200 rounded-[2rem] shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="flex items-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 -mt-2 sm:-mt-4">
+          <div className="relative bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl sm:rounded-[2rem] shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center">
               {/* Search Input */}
               <div className="flex-1 flex items-center">
-                <div className="pl-4 pr-2">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="pl-3 sm:pl-4 pr-2">
+                  <svg className="h-4 sm:h-5 w-4 sm:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
                 <input
                   type="text"
-                  placeholder="Cerca strumenti, materie o descrizioni..."
+                  placeholder="Cerca strumenti..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-1 py-4 px-2 text-sm bg-transparent border-0 focus:outline-none focus:ring-0 placeholder-gray-500"
+                  className="flex-1 py-3 sm:py-4 px-2 text-sm bg-transparent border-0 focus:outline-none focus:ring-0 placeholder-gray-500"
                 />
               </div>
               
-              {/* Divider */}
-              <div className="h-8 w-px bg-gray-200"></div>
-              
-              {/* Subject Filter */}
-              <div className="px-3">
-                <select
-                  value={selectedSubject}
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="bg-transparent border-0 text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer"
-                >
-                  <option value="">Tutte le materie</option>
-                  {subjects.map(subject => (
-                    <option key={subject} value={subject}>{subject}</option>
-                  ))}
-                </select>
+              {/* Mobile: Filters button */}
+              <div className="sm:hidden border-t border-gray-200 p-3">
+                <div className="flex items-center justify-center">
+                  <select
+                    value={selectedSubject}
+                    onChange={(e) => setSelectedSubject(e.target.value)}
+                    className="bg-transparent border-0 text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer w-full text-center"
+                  >
+                    <option value="">Tutte le materie</option>
+                    {subjects.map(subject => (
+                      <option key={subject} value={subject}>{subject}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               
-              {/* Divider */}
-              <div className="h-8 w-px bg-gray-200"></div>
-              
-              {/* View Mode Toggle */}
-              <div className="flex items-center px-3">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg transition-all duration-200 ${
-                    viewMode === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:text-gray-600'
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg transition-all duration-200 ${
-                    viewMode === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:text-gray-600'
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                  </svg>
-                </button>
+              {/* Desktop: Horizontal layout */}
+              <div className="hidden sm:flex items-center">
+                {/* Divider */}
+                <div className="h-8 w-px bg-gray-200"></div>
+                
+                {/* Subject Filter */}
+                <div className="px-3">
+                  <select
+                    value={selectedSubject}
+                    onChange={(e) => setSelectedSubject(e.target.value)}
+                    className="bg-transparent border-0 text-sm text-gray-700 focus:outline-none focus:ring-0 cursor-pointer"
+                  >
+                    <option value="">Tutte le materie</option>
+                    {subjects.map(subject => (
+                      <option key={subject} value={subject}>{subject}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                {/* Divider */}
+                <div className="h-8 w-px bg-gray-200"></div>
+                
+                {/* View Mode Toggle */}
+                <div className="flex items-center px-3">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`p-2 rounded-xl transition-all duration-200 ${
+                      viewMode === 'grid' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 rounded-xl transition-all duration-200 ${
+                      viewMode === 'list' ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -217,8 +248,8 @@ const App = () => {
         </div>
 
         {/* Tools Display */}
-        <div className="max-w-6xl mx-auto px-6 py-6">
-        {viewMode === 'grid' ? (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+        {viewMode === 'grid' && !isMobile ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTools.map((tool, index) => (
               <div key={index} className="group h-full">
