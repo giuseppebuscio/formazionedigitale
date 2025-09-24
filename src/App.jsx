@@ -109,7 +109,9 @@ const App = () => {
 
     // Strumenti per Collaborazione e Inclusione
     { name: "Padlet", url: "https://padlet.com/", description: "Bacheca virtuale per collaborazione e condivisione", subjects: ["Altro"], platform: "Web/App", pricing: "Freemium", tags: ["Collaborazione", "Bacheca", "Condivisione", "Multimediale"] },
-    { name: "LeggiXme", url: "https://sd2.itd.cnr.it/index.php?r=site/scheda&id=5626", description: "Programma per facilitare la lettura e scrittura attraverso sintesi vocale", subjects: ["Altro"], platform: "Windows", pricing: "Gratuito", tags: ["Sintesi Vocale", "Accessibilità", "Lettura", "Scrittura", "DSA"] }
+    { name: "LeggiXme", url: "https://sd2.itd.cnr.it/index.php?r=site/scheda&id=5626", description: "Programma per facilitare la lettura e scrittura attraverso sintesi vocale", subjects: ["Altro"], platform: "Windows", pricing: "Gratuito", tags: ["Sintesi Vocale", "Accessibilità", "Lettura", "Scrittura", "DSA"] },
+    { name: "Mentimeter", url: "https://www.mentimeter.com/", description: "Strumento per presentazioni interattive e sondaggi in tempo reale", subjects: ["Altro"], platform: "Web/App", pricing: "Freemium", tags: ["Presentazioni", "Sondaggi", "Interattivo", "Tempo Reale", "Engagement"] },
+    { name: "Vocaroo", url: "https://vocaroo.com/", description: "Registrazione e condivisione di messaggi vocali online", subjects: ["Altro"], platform: "Web", pricing: "Gratuito", tags: ["Audio", "Registrazione", "Condivisione", "Messaggi Vocali", "Comunicazione"] }
   ]
 
   const subjects = [...new Set(educationalTools.flatMap(tool => tool.subjects))].sort()
