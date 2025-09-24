@@ -105,7 +105,11 @@ const App = () => {
     
     // Giochi Educativi per Bambini
     { name: "Toy Theater", url: "https://toytheater.com/", description: "Giochi educativi online per bambini", subjects: ["Altro"], platform: "Web", pricing: "Gratuito", tags: ["Giochi", "Bambini", "Educativo"] },
-    { name: "AutoDraw", url: "https://www.autodraw.com/", description: "Disegno assistito con AI di Google", subjects: ["Arte", "Intrattenimento"], platform: "Web", pricing: "Gratuito", tags: ["Disegno", "AI", "Google", "Creatività"] }
+    { name: "AutoDraw", url: "https://www.autodraw.com/", description: "Disegno assistito con AI di Google", subjects: ["Arte", "Intrattenimento"], platform: "Web", pricing: "Gratuito", tags: ["Disegno", "AI", "Google", "Creatività"] },
+
+    // Strumenti per Collaborazione e Inclusione
+    { name: "Padlet", url: "https://padlet.com/", description: "Bacheca virtuale per collaborazione e condivisione", subjects: ["Altro"], platform: "Web/App", pricing: "Freemium", tags: ["Collaborazione", "Bacheca", "Condivisione", "Multimediale"] },
+    { name: "LeggiXme", url: "https://sd2.itd.cnr.it/index.php?r=site/scheda&id=5626", description: "Programma per facilitare la lettura e scrittura attraverso sintesi vocale", subjects: ["Altro"], platform: "Windows", pricing: "Gratuito", tags: ["Sintesi Vocale", "Accessibilità", "Lettura", "Scrittura", "DSA"] }
   ]
 
   const subjects = [...new Set(educationalTools.flatMap(tool => tool.subjects))].sort()
